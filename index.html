@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Mind Reader's Paradox: Understanding Social Cognition Failures</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Georgia, serif;
+            line-height: 1.7;
+            color: #2d3748;
+            background: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            min-height: 100vh;
+            background: #2d3748;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            padding: 2rem;
+        }
+
+        .hero-content {
+            z-index: 2;
+            position: relative;
+            max-width: 900px;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 300;
+            color: white;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1s ease 0.5s forwards;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 1s forwards;
+        }
+
+        .hero-intro {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 1.5s forwards;
+            color: #2d3748;
+            text-align: left;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            background: white;
+            margin: 3rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: 1px solid #e2e8f0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-header {
+            background: #2d3748;
+            color: white;
+            padding: 2rem;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .section-header h2 {
+            font-size: 1.6rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-teaser {
+            font-size: 1rem;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .section-content {
+            padding: 2.5rem;
+            display: none;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        .section-content.active {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .research-highlight {
+            background: #edf2f7;
+            border-left: 4px solid #4a5568;
+            padding: 2rem;
+            border-radius: 6px;
+            margin: 2rem 0;
+        }
+
+        .research-highlight h3 {
+            color: #2d3748;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .concept-box {
+            background: #f7fafc;
+            padding: 2rem;
+            border-radius: 6px;
+            margin: 2rem 0;
+            border: 1px solid #e2e8f0;
+        }
+
+        .concept-box h3 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
+
+        .meta-analysis {
+            background: #e6fffa;
+            border-left: 4px solid #38b2ac;
+            padding: 2rem;
+            border-radius: 6px;
+            margin: 2rem 0;
+        }
+
+        .meta-analysis h3 {
+            color: #2c7a7b;
+            margin-bottom: 1rem;
+        }
+
+        .key-finding {
+            background: #fffaf0;
+            border-left: 4px solid #d69e2e;
+            padding: 2rem;
+            border-radius: 6px;
+            margin: 2rem 0;
+        }
+
+        .key-finding h3 {
+            color: #b7791f;
+            margin-bottom: 1rem;
+        }
+
+        .interactive-demo {
+            background: #f0fff4;
+            border: 2px solid #c6f6d5;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .demo-button {
+            background: #2d3748;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            margin: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .demo-button:hover {
+            background: #4a5568;
+        }
+
+        .demo-result {
+            background: white;
+            border-left: 4px solid #2d3748;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-radius: 0 6px 6px 0;
+            display: none;
+            animation: fadeIn 0.5s ease;
+            text-align: left;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .progress-tracker {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: rgba(45, 55, 72, 0.1);
+            z-index: 1000;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #2d3748;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+
+        .data-table th {
+            background: #f7fafc;
+            font-weight: 600;
+        }
+
+        .synthesis {
+            background: #2d3748;
+            color: white;
+            padding: 3rem;
+            border-radius: 8px;
+            margin-top: 4rem;
+        }
+
+        .synthesis h2 {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        .synthesis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .synthesis-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .synthesis-item h3 {
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .citation {
+            font-size: 0.9rem;
+            color: #718096;
+            font-style: italic;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .section-content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-tracker">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>The Mind Reader's Paradox</h1>
+            <p class="hero-subtitle">Why our confidence in reading people inversely matches our accuracy</p>
+            <div class="hero-intro">
+                <p>We make judgments about other people constantly. We decide if someone is lying, whether a job candidate will succeed, or why our colleague seems upset. These social judgments feel natural and often feel certain.</p>
+                
+                <p>But decades of psychological research reveal a troubling pattern: we're systematically bad at reading people. We detect lies no better than chance, our interviews barely predict job performance, and we consistently mistake circumstances for character. Most unsettling of all—the more confident we feel about these judgments, the more likely we are to be wrong.</p>
+                
+                <p><strong>This guide examines what research tells us about why we fail at mind reading, and what we can do about it.</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>Why We Blame Personality Instead of Circumstances</h2>
+                <p class="section-teaser">Ross & Nisbett's foundational work on a universal thinking error</p>
+            </div>
+            <div class="section-content">
+                <p>Here's a pattern you've probably noticed: when someone cuts you off in traffic, you think "what a jerk." When you cut someone off, it's because you're late for something important.</p>
+
+                <p>This isn't just a quirk. It's a fundamental error in how humans think about behavior. Psychologists call it the "fundamental attribution error"—we explain other people's actions through their personality, but our own actions through our circumstances.</p>
+
+                <div class="research-highlight">
+                    <h3>The Castro Essay Study</h3>
+                    <p>Jones and Harris (1967) ran a clever experiment. They had students read essays either praising or criticizing Fidel Castro. Here's the key: half the students were told that essay writers chose their position freely. The other half were told writers had been randomly assigned to argue either for or against Castro—they had no choice.</p>
+                    
+                    <p>You'd think this would matter, right? If someone was forced to write a pro-Castro essay, you wouldn't assume they actually supported Castro.</p>
+                    
+                    <p>But that's exactly what happened. Even when students knew the writers had been assigned their positions, they still assumed pro-Castro essays meant pro-Castro beliefs. The knowledge that writers had no choice barely affected their judgments.</p>
+                    <div class="citation">Jones, E. E., & Harris, V. A. (1967). The attribution of attitudes. Journal of Experimental Social Psychology, 3(1), 1-24.</div>
+                </div>
+
+                <div class="concept-box">
+                    <h3>Why This Happens: The Spotlight Effect</h3>
+                    <p>Ross and Nisbett (1991) figured out why we make this mistake. When you watch someone else behave, that person fills your view—literally. You see them clearly while everything affecting them stays in the background or completely invisible.</p>
+                    
+                    <p>Think about watching someone on a video call. You see their face and expressions clearly. But you can't see their screaming toddler off-camera, their broken air conditioner, or the work email that just stressed them out. The person is vivid; their situation is invisible.</p>
+                    
+                    <p>Meanwhile, when explaining your own behavior, you have full access to your internal world. You know exactly what pressures, emotions, and circumstances influenced your actions.</p>
+                </div>
+
+                <div class="research-highlight">
+                    <h3>The Good Samaritan Study: When Situation Trumps Character</h3>
+                    <p>Here's one of psychology's most striking demonstrations of how situations matter more than personality.</p>
+                    
+                    <p>Darley and Batson (1973) studied seminary students—people training to become religious leaders. These students were asked to walk across campus to give a talk about the Good Samaritan parable (the biblical story about helping someone in need).</p>
+                    
+                    <p>On their way to the talk, each student encountered a person slumped in a doorway, clearly needing help. But here was the manipulation: some students were told they were running late for their talk, others were told they had plenty of time.</p>
+                    
+                    <p><strong>Results:</strong> 63% of students with time stopped to help. Only 10% of hurried students helped. Whether someone helped had almost nothing to do with how religious they were or their scores on personality tests measuring helpfulness. Being in a hurry predicted helping better than being a seminary student.</p>
+                    
+                    <p>Think about that: future religious leaders, on their way to talk about helping others, stepped over someone who needed help—simply because they were told they were late.</p>
+                    <div class="citation">Darley, J. M., & Batson, C. D. (1973). "From Jerusalem to Jericho": A study of situational and dispositional variables in helping behavior. Journal of Personality and Social Psychology, 27(1), 100-108.</div>
+                </div>
+
+                <div class="key-finding">
+                    <h3>Ross & Nisbett's Big Insight: "Exploit the Situation"</h3>
+                    <p>Instead of trying to find the "right person" for a task, Ross and Nisbett suggest focusing on creating the "right situation." Their research shows that powerful situations can get most people to behave in desired ways, while weak situations reveal individual differences.</p>
+                    
+                    <p>This changes how we should think about everything from managing employees to understanding crime to improving relationships. Instead of asking "What's wrong with this person?" ask "What situation created this behavior?"</p>
+                </div>
+
+                <div class="interactive-demo">
+                    <h3>Catch Yourself Making Attribution Errors</h3>
+                    <p>Think about the last time someone was rude to you—a cashier, driver, coworker, or stranger.</p>
+                    <button class="demo-button" onclick="showAttributionAnalysis()">See Your Likely Thinking Pattern</button>
+                    <div class="demo-result" id="attributionResult">
+                        <p><strong>You probably thought:</strong> "They're rude" or "They're having a bad attitude" or "They're inconsiderate"</p>
+                        
+                        <p><strong>You probably didn't spend much time considering:</strong></p>
+                        <ul>
+                            <li>They just received terrible news</li>
+                            <li>They're in physical pain</li>
+                            <li>Their child is sick at home</li>
+                            <li>They hate their job but need the money</li>
+                            <li>They're worried about losing their home</li>
+                            <li>They haven't slept in days</li>
+                            <li>Their boss just yelled at them</li>
+                        </ul>
+                        
+                        <p>This is the fundamental attribution error in action. We see the person clearly, but their situation remains invisible to us. Our first instinct is always to explain behavior through character rather than circumstances.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>Why We're Terrible at Spotting Lies</h2>
+                <p class="section-teaser">Tim Levine's research on why humans default to believing each other</p>
+            </div>
+            <div class="section-content">
+                <p>Everyone thinks they can spot a liar. Parents believe they know when their kids are lying. Police officers trust their instincts about suspects. We all have stories about "knowing" someone was being dishonest.</p>
+
+                <p>Here's the uncomfortable truth: humans detect lies at about 54% accuracy. That's barely better than flipping a coin.</p>
+
+                <div class="meta-analysis">
+                    <h3>The Research Evidence</h3>
+                    <p>Bond and DePaulo (2006) analyzed 206 studies on lie detection involving thousands of participants. Their findings:</p>
+                    <ul>
+                        <li>Average accuracy: 54% (chance = 50%)</li>
+                        <li>Police officers: 54% (no better than students)</li>
+                        <li>Judges: 54% (no better than anyone else)</li>
+                        <li>FBI agents: 54% (training doesn't help)</li>
+                    </ul>
+                    <p>Professional lie detectors don't outperform college students. They're just more confident about being wrong.</p>
+                    <div class="citation">Bond, C. F., & DePaulo, B. M. (2006). Accuracy of deception judgments. Personality and Social Psychology Review, 10(3), 214-234.</div>
+                </div>
+
+                <div class="concept-box">
+                    <h3>Why We Default to Truth: Levine's Truth-Default Theory</h3>
+                    <p>Tim Levine (2014) offers an explanation for why we're so bad at catching lies. He argues that humans operate with a "truth-default"—we assume people are being honest unless given strong reasons to doubt them.</p>
+                    
+                    <p>This seems like a flaw, but it's actually adaptive:</p>
+                    <ul>
+                        <li><strong>Most communication really is honest.</strong> If we doubted everything, we'd waste enormous mental energy.</li>
+                        <li><strong>Societies need trust to function.</strong> Cooperation requires some level of faith in others' words.</li>
+                        <li><strong>Relationships depend on presuming good faith.</strong> Constant suspicion would destroy social bonds.</li>
+                    </ul>
+                    
+                    <p>The downside? This truth-default makes us sitting ducks for skilled liars.</p>
+                </div>
+
+                <div class="research-highlight">
+                    <h3>Why There's No "Pinocchio's Nose"</h3>
+                    <p>Popular culture loves the idea of reliable "tells"—ways to spot liars through their behavior. DePaulo and colleagues (2003) analyzed 158 studies looking for these behavioral cues.</p>
+                    
+                    <p><strong>Common myths about lying behavior:</strong></p>
+                    <ul>
+                        <li>❌ Liars avoid eye contact</li>
+                        <li>❌ Liars fidget and squirm</li>
+                        <li>❌ Liars touch their face or nose</li>
+                        <li>❌ Liars speak in higher voices</li>
+                        <li>❌ Liars pause more when talking</li>
+                    </ul>
+                    
+                    <p>The reality: these cues show tiny, inconsistent relationships with deception. Even when present, they're easily faked by good liars or displayed by honest people who are nervous about being falsely accused.</p>
+                    
+                    <p>Good liars know the trick: embed lies within mostly truthful statements. They vary their strategies. They may actually appear more calm when the stakes are high, having planned their deception carefully.</p>
+                    <div class="citation">DePaulo, B. M., et al. (2003). Cues to deception. Psychological Bulletin, 129(1), 74-118.</div>
+                </div>
+
+                <div class="key-finding">
+                    <h3>The Confidence Problem</h3>
+                    <p>Here's what makes this worse: professionals who work in law enforcement, security, and investigation are just as accurate as everyone else, but they're more confident in their judgments. They feel certain about decisions that are essentially random.</p>
+                    
+                    <p>This confidence-without-accuracy creates serious problems in criminal justice, airport security, and anywhere else people's lives depend on deception detection.</p>
+                    
+                    <p>What actually works better? Strategic questioning that focuses on the content and consistency of stories rather than trying to read body language and vocal cues.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>Why Job Interviews Predict Almost Nothing</h2>
+                <p class="section-teaser">The research on why we're confident about hiring decisions that barely beat chance</p>
+            </div>
+            <div class="section-content">
+                <p>Every hiring manager has a story about the candidate they "just knew" would be perfect. Six months later, many of those "perfect" hires disappoint while rejected candidates succeed elsewhere.</p>
+
+                <p>Traditional job interviews—the kind where you have a friendly conversation and go with your gut—are terrible at predicting job performance. Yet we keep using them because they make us feel confident about our choices.</p>
+
+                <div class="meta-analysis">
+                    <h3>How Well Do Different Hiring Methods Actually Work?</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Selection Method</th>
+                                <th>How Well It Predicts Performance</th>
+                                <th>What This Means</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Work Sample Tests</td>
+                                <td>54% accuracy</td>
+                                <td>Actually test people doing the job</td>
+                            </tr>
+                            <tr>
+                                <td>Structured Interviews</td>
+                                <td>51% accuracy</td>
+                                <td>Same questions, scoring system for everyone</td>
+                            </tr>
+                            <tr>
+                                <td>General Mental Ability Tests</td>
+                                <td>51% accuracy</td>
+                                <td>Problem-solving and reasoning tests</td>
+                            </tr>
+                            <tr>
+                                <td>Unstructured Interviews</td>
+                                <td>38% accuracy</td>
+                                <td>Traditional "let's chat" interviews</td>
+                            </tr>
+                            <tr>
+                                <td>Reference Checks</td>
+                                <td>26% accuracy</td>
+                                <td>Barely better than random</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>Notice the gap? Unstructured interviews—the ones most companies use—are much worse than structured approaches or actual work tests.</p>
+                    <div class="citation">Schmidt, F. L., & Hunter, J. E. (1998). The validity and utility of selection methods in personnel psychology. Psychological Bulletin, 124(2), 262-274.</div>
+                </div>
+
+                <div class="research-highlight">
+                    <h3>The Texas Medical School Surprise</h3>
+                    <p>In 1979, a court order forced the University of Texas Medical School to admit 50 students they had previously rejected based on interviews. The school administration was convinced these were inferior candidates who would struggle or fail.</p>
+                    
+                    <p>What happened? Researchers followed both groups throughout medical school. The "rejected" students performed just as well as regularly admitted students on:</p>
+                    <ul>
+                        <li>Academic grades</li>
+                        <li>Clinical performance ratings</li>
+                        <li>Graduation rates</li>
+                        <li>Licensing exam scores</li>
+                    </ul>
+                    
+                    <p>The interviews had given admissions committees confidence in their decisions, but that confidence wasn't backed by accuracy. They were rejecting perfectly qualified candidates based on brief conversations.</p>
+                    <div class="citation">DeVaul, R. A., et al. (1987). Medical school performance of initially rejected students. JAMA, 257(1), 47-51.</div>
+                </div>
+
+                <div class="concept-box">
+                    <h3>The "Illusion of Insight" Problem</h3>
+                    <p>Here's what makes interviews particularly dangerous: they don't just fail to predict performance—they can actually make our decisions worse.</p>
+                    
+                    <p>Dana and colleagues (2013) ran studies where people made hiring predictions using statistical information alone (like test scores and grades) versus using statistics plus interview impressions. The result? People made better predictions using statistics alone. Adding interview information made them more confident but less accurate.</p>
+                    
+                    <p>Why? Interviews generate vivid, memorable impressions that feel meaningful but aren't actually diagnostic. These strong impressions overwhelm the boring-but-valid statistical data, leading to worse decisions that feel more certain.</p>
+                </div>
+
+                <div class="key-finding">
+                    <h3>The First Five Minutes Trap</h3>
+                    <p>Many managers proudly say they "know within the first five minutes" if a candidate is right for the job. Research suggests this is exactly when bias is strongest.</p>
+                    
+                    <p>Those instant impressions—based on appearance, accent, handshake, or conversational style—become self-fulfilling prophecies. Managers spend the rest of the interview looking for evidence that confirms their snap judgment while ignoring contradictory information.</p>
+                    
+                    <p><strong>What actually works:</strong> Structured interviews with predetermined questions, standardized scoring, and focus on job-relevant scenarios. It feels less personal, but it's far more accurate.</p>
+                </div>
+
+                <div class="interactive-demo">
+                    <h3>Examine Your Own Interview Biases</h3>
+                    <p>Think about someone you met recently and formed a quick impression of—positive or negative.</p>
+                    <button class="demo-button" onclick="showInterviewBias()">See What Likely Influenced You</button>
+                    <div class="demo-result" id="interviewResult">
+                        <p><strong>Your first impression was probably based on:</strong></p>
+                        <ul>
+                            <li><strong>Physical appearance:</strong> clothes, grooming, posture, attractiveness</li>
+                            <li><strong>Voice characteristics:</strong> accent, tone, pace, confidence level</li>
+                            <li><strong>Nonverbal behavior:</strong> eye contact, handshake firmness, gestures</li>
+                            <li><strong>Conversational style:</strong> how quickly they responded, their humor, their energy</li>
+                        </ul>
+                        
+                        <p><strong>What these things actually predict:</strong></p>
+                        <ul>
+                            <li>Socioeconomic background (somewhat)</li>
+                            <li>Cultural familiarity with interview norms (somewhat)</li>
+                            <li>Current confidence/comfort level (in this specific situation)</li>
+                            <li>Extraversion (when behaviorally expressed)</li>
+                        </ul>
+                        
+                        <p><strong>What they don't reliably predict:</strong> job performance, integrity, intelligence, creativity, teamwork ability, or how they'll handle work stress six months from now.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>When Split-Second Judgments Work (And When They Don't)</h2>
+                <p class="section-teaser">Understanding the real boundaries of rapid social perception</p>
+            </div>
+            <div class="section-content">
+                <p>Malcolm Gladwell's book "Blink" popularized the idea that we can make amazingly accurate judgments in seconds. The reality is more complicated: quick judgments work for some things but fail catastrophically for others.</p>
+
+                <p>The key is knowing the difference.</p>
+
+                <div class="research-highlight">
+                    <h3>The Teacher Study: When Thin Slices Work</h3>
+                    <p>Ambady and Rosenthal (1993) showed college students 10-second silent video clips of teachers in action. The students rated these teachers on various dimensions. Remarkably, these ratings correlated strongly (r = .76) with how students rated the same teachers at the end of the full semester.</p>
+                    
+                    <p>This seems like proof that snap judgments work, right?</p>
+                    
+                    <p>Maybe. Follow-up research suggests these quick judgments capture broad qualities like enthusiasm, confidence, and energy rather than actual teaching skill. Students might be responding to the same superficial cues in both the 10-second clips and the full semester—not accurately assessing teaching effectiveness.</p>
+                    <div class="citation">Ambady, N., & Rosenthal, R. (1993). Half a minute: Predicting teacher evaluations from thin slices of nonverbal behavior and physical attractiveness. Journal of Personality and Social Psychology, 64(3), 431-441.</div>
+                </div>
+
+                <div class="concept-box">
+                    <h3>What Quick Judgments Can and Can't Do</h3>
+                    <p><strong>Thin slices show some accuracy for:</strong></p>
+                    <ul>
+                        <li><strong>Current emotional states:</strong> happy, anxious, excited, frustrated</li>
+                        <li><strong>Broad personality traits:</strong> extraversion (when people are actively being social)</li>
+                        <li><strong>Some abilities:</strong> when you can directly observe them in action</li>
+                        <li><strong>Social confidence:</strong> how comfortable someone feels in the moment</li>
+                    </ul>
+                    
+                    <p><strong>Thin slices consistently fail for:</strong></p>
+                    <ul>
+                        <li><strong>Deception detection:</strong> no reliable visual tells</li>
+                        <li><strong>Complex character traits:</strong> honesty, intelligence, creativity, leadership potential</li>
+                        <li><strong>Future behavior:</strong> how someone will perform in different situations</li>
+                        <li><strong>Deep personality:</strong> what someone is like when they're not being observed</li>
+                    </ul>
+                </div>
+
+                <div class="research-highlight">
+                    <h3>The Trustworthy Face Illusion</h3>
+                    <p>People form impressions of trustworthiness from faces in under 100 milliseconds (Willis & Todorov, 2006). These judgments are highly consistent—everyone tends to agree about which faces look trustworthy.</p>
+                    
+                    <p>But here's the problem: facial trustworthiness has almost no relationship to actual trustworthy behavior.</p>
+                    
+                    <p>Foo and colleagues (2021) analyzed decades of research on whether faces reveal personality. Their conclusion: facial appearance provides minimal valid information about how people actually behave, despite our strong conviction that faces are meaningful.</p>
+                    
+                    <p>We're essentially practicing a modern form of physiognomy—the discredited 19th-century belief that facial features reveal character. The difference is we do it unconsciously and call it intuition.</p>
+                    <div class="citation">Foo, Y. Z., et al. (2021). Accurate facial-based judgments of personality: A meta-analysis. Personality and Social Psychology Review, 25(3), 238-268.</div>
+                </div>
+
+                <div class="key-finding">
+                    <h3>The Confidence Problem (Again)</h3>
+                    <p>The most dangerous aspect of thin-slice judgments is how confident they make us feel. A brief interaction creates a vivid, memorable impression that feels like deep insight into someone's character.</p>
+                    
+                    <p>This confidence is misplaced. We're often detecting surface-level traits (current mood, social comfort, cultural familiarity) and mistaking them for deep, stable characteristics.</p>
+                    
+                    <p>The person who seems "off" in a brief meeting might be having a terrible day, feeling culturally out of place, or simply being cautious in a new environment—not revealing their true personality.</p>
+                </div>
+
+                <div class="interactive-demo">
+                    <h3>Analyze Your Snap Judgment Accuracy</h3>
+                    <p>Think of someone you formed a strong first impression about, then got to know better over time.</p>
+                    <button class="demo-button" onclick="showThinSliceAnalysis()">Compare First Impressions to Later Knowledge</button>
+                    <div class="demo-result" id="thinSliceResult">
+                        <p><strong>Your initial judgment probably captured:</strong></p>
+                        <ul>
+                            <li>How they seemed in that specific context</li>
+                            <li>Their comfort level in that particular situation</li>
+                            <li>Surface-level traits like apparent confidence or friendliness</li>
+                            <li>How similar they seemed to you or people you know</li>
+                        </ul>
+                        
+                        <p><strong>You probably missed or misjudged:</strong></p>
+                        <ul>
+                            <li>How they act in different situations</li>
+                            <li>Their deeper values and motivations</li>
+                            <li>Their actual competence at tasks relevant to your relationship</li>
+                            <li>How they handle stress, conflict, or challenge</li>
+                            <li>Their capacity for growth and change</li>
+                        </ul>
+                        
+                        <p>First impressions are really "first situation impressions"—they tell you how someone presents in one specific context, not who they are across all contexts.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>How Technology Makes Us Worse at Reading People</h2>
+                <p class="section-teaser">Why digital communication strips away the cues we need—without us realizing it</p>
+            </div>
+            <div class="section-content">
+                <p>If reading people face-to-face is hard, digital communication makes it nearly impossible. Text messages, emails, and even video calls remove most of the information we use to understand each other.</p>
+
+                <p>Yet we feel just as confident making judgments about people through screens as we do in person. This confidence is misplaced.</p>
+
+                <div class="research-highlight">
+                    <h3>The Email Sarcasm Problem</h3>
+                    <p>Kruger and colleagues (2005) ran a simple but revealing study. They had people write emails that were either sarcastic or sincere, then had other people read them.</p>
+                    
+                    <p>The results:</p>
+                    <ul>
+                        <li><strong>Email writers thought their sarcasm/sincerity came through clearly 78% of the time</li>
+                        <li><strong>Email readers correctly identified the intended tone only 56% of the time</strong></li>
+                    </ul>
+                    
+                    <p>That's barely better than chance. But both groups felt confident about their communication.</p>
+                    
+                    <p>Why this happens: when you write an email, you "hear" your intended tone in your head. You assume the reader will hear the same tone from your words alone. They don't.</p>
+                    <div class="citation">Kruger, J., et al. (2005). Egocentrism over e-mail: Can we communicate as well as we think? Journal of Personality and Social Psychology, 89(6), 925-936.</div>
+                </div>
+
+                <div class="concept-box">
+                    <h3>The Negativity Bias in Text Communication</h3>
+                    <p>Byron's (2008) research revealed a systematic problem with how we interpret text-based messages:</p>
+                    
+                    <ul>
+                        <li><strong>Neutral messages feel negative.</strong> "Thanks for the update" might come across as cold or dismissive.</li>
+                        <li><strong>Positive emotions get lost.</strong> Genuine praise can feel lukewarm or fake.</li>
+                        <li><strong>When in doubt, we assume the worst.</strong> Ambiguous messages get interpreted negatively.</li>
+                    </ul>
+                    
+                    <p>This isn't paranoia—it's a predictable bias. Text communication systematically shifts our interpretations toward negativity.</p>
+                    
+                    <p>The result: misunderstandings that escalate into conflicts, relationships that suffer from perceived coldness, and collaborative work that gets derailed by imagined hostility.</p>
+                </div>
+
+                <div class="research-highlight">
+                    <h3>Video Calls: Better Than Text, Worse Than In-Person</h3>
+                    <p>Video calling seems like it should solve digital communication problems—we can see faces and hear voices. But research comparing video interactions to in-person meetings reveals consistent differences.</p>
+                    
+                    <p>People interacting over video (compared to face-to-face):</p>
+                    <ul>
+                        <li>Rate each other as less warm and friendly</li>
+                        <li>Report lower levels of trust and rapport</li>
+                        <li>Feel the conversation is more effortful and draining</li>
+                        <li>Make harsher judgments about personality and competence</li>
+                    </ul>
+                    
+                    <p>Multiple factors contribute: technical delays that disrupt conversation flow, awkward eye contact (looking at someone's face vs. looking at the camera), poor audio quality, and the cognitive effort required to process degraded social information.</p>
+                </div>
+
+                <div class="key-finding">
+                    <h3>The Attribution Problem Gets Worse Online</h3>
+                    <p>Remember the fundamental attribution error—how we blame personality instead of circumstances? Digital communication makes this worse.</p>
+                    
+                    <p>When someone seems cold over email, we don't consider:</p>
+                    <ul>
+                        <li>They're writing quickly between meetings</li>
+                        <li>Their company culture favors brief, direct communication</li>
+                        <li>They're not a native English speaker and are being careful with words</li>
+                        <li>They're trying to be professional and coming across as distant</li>
+                        <li>They're juggling multiple urgent requests</li>
+                    </ul>
+                    
+                    <p>Instead, we think: "They're unfriendly" or "They don't like me" or "They're not a team player."</p>
+                    
+                    <p>The medium shapes the behavior, but we attribute the behavior to the person.</p>
+                </div>
+
+                <div class="interactive-demo">
+                    <h3>Decode Digital Tone</h3>
+                    <p>Consider this message from a colleague: "Thanks for sending this over."</p>
+                    <button class="demo-button" onclick="showDigitalGap()">See How You Might Misread It</button>
+                    <div class="demo-result" id="digitalResult">
+                        <p><strong>How you might interpret this:</strong></p>
+                        <ul>
+                            <li>😊 Genuine gratitude</li>
+                            <li>😐 Neutral acknowledgment</li>
+                            <li>😤 Sarcasm ("Finally!")</li>
+                            <li>😒 Passive-aggressive annoyance</li>
+                            <li>🙄 Dismissive brush-off</li>
+                        </ul>
+                        
+                        <p><strong>The reality:</strong> Your interpretation has almost nothing to do with their actual intent and everything to do with:</p>
+                        <ul>
+                            <li>Your current mood and stress level</li>
+                            <li>Your recent history with this person</li>
+                            <li>What you're worried about</li>
+                            <li>The context you're reading this in</li>
+                        </ul>
+                        
+                        <p>Without vocal tone, facial expressions, or body language, you're essentially guessing—but it doesn't feel like guessing.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>What AI Can and Can't Tell Us About People</h2>
+                <p class="section-teaser">Understanding the difference between pattern recognition and genuine insight</p>
+            </div>
+            <div class="section-content">
+                <p>AI systems increasingly claim to "read" emotions from faces, detect personality from social media, and predict behavior from voice patterns. These claims sound impressive, but we need to understand what AI is actually doing—and what it's not.</p>
+
+                <div class="concept-box">
+                    <h3>AI as Pattern Matcher, Not Mind Reader</h3>
+                    <p>AI systems are extraordinarily sophisticated pattern-matching machines. They can find correlations in massive datasets that humans would never notice. But finding patterns isn't the same as understanding people.</p>
+                    
+                    <p>Here's the key distinction:</p>
+                    <ul>
+                        <li><strong>AI excels at detection:</strong> "People who like these 10 bands also tend to score high on openness tests"</li>
+                        <li><strong>AI struggles with interpretation:</strong> "This person likes experimental music because they're curious and seek novel experiences"</li>
+                    </ul>
+                    
+                    <p>The difference matters. Pattern detection can be incredibly useful for prediction, but it doesn't provide psychological insight into why patterns exist or what they mean for individual people.</p>
+                </div>
+
+                <div class="research-highlight">
+                    <h3>The Facebook Personality Prediction Study</h3>
+                    <p>Youyou and colleagues (2015) created an algorithm that predicted Big Five personality traits from Facebook likes. The results were impressive:</p>
+                    
+                    <ul>
+                        <li>With 10 likes: better than coworkers at predicting personality</li>
+                        <li>With 70 likes: better than friends or roommates</li>
+                        <li>With 300 likes: better than spouses</li>
+                    </ul>
+                    
+                    <p>Sounds like AI achieved genuine psychological insight, right?</p>
+                    
+                    <p>Not exactly. The system works through pure correlation: it notices that people who like certain bands, books, or brands tend to answer personality questions in similar ways. It's incredibly good at spotting these statistical relationships, but it has no understanding of why they exist.</p>
+                    
+                    <p>The AI doesn't know that someone likes experimental music because they're creative—it just knows that experimental music likers tend to score high on "openness" tests. It's correlation without comprehension.</p>
+                    <div class="citation">Youyou, W., et al. (2015). Computer-based personality judgments are more accurate than those made by humans. Proceedings of the National Academy of Sciences, 112(4), 1036-1040.</div>
+                </div>
+
+                <div class="key-finding">
+                    <h3>The Emotion Recognition Problem</h3>
+                    <p>AI emotion recognition systems confidently label faces as "happy," "sad," "angry," or "surprised." They achieve high accuracy on standardized datasets. But there are serious problems with this approach.</p>
+                    
+                    <p>Barrett and colleagues (2019) point out fundamental flaws:</p>
+                    <ul>
+                        <li><strong>Emotions don't map universally to facial expressions.</strong> A smile might indicate happiness, politeness, discomfort, sarcasm, or social obligation.</li>
+                        <li><strong>Cultural differences matter.</strong> The same facial expression can mean different things in different cultures.</li>
+                        <li><strong>Context is crucial.</strong> The same expression has different meanings in different situations.</li>
+                        <li><strong>Individual variation is huge.</strong> People express emotions differently based on personality, culture, and learned habits.</li>
+                    </ul>
+                    
+                    <p>AI systems see facial muscle movements and assume internal emotional states. But facial expressions are behaviors, not direct readouts of feelings.</p>
+                </div>
+
+                <div class="research-highlight">
+                    <h3>The Sexual Orientation Detection Controversy</h3>
+                    <p>One study claimed AI could detect sexual orientation from facial photos with 80%+ accuracy. This caused understandable alarm about privacy and discrimination.</p>
+                    
+                    <p>Critics pointed out a crucial flaw: the system likely wasn't detecting sexual orientation from facial features. It was probably picking up on:</p>
+                    <ul>
+                        <li>Grooming and styling choices</li>
+                        <li>Photo angles and presentation</li>
+                        <li>Makeup and fashion decisions</li>
+                        <li>Cultural markers and social signaling</li>
+                    </ul>
+                    
+                    <p>The AI was reading social performance and cultural expression—not sexual orientation itself. This distinction matters enormously for understanding what AI can and can't actually detect about people.</p>
+                </div>
+
+                <div class="concept-box">
+                    <h3>Why Human Judgment Still Matters</h3>
+                    <p>AI systems are powerful tools for finding patterns in behavior, but human social cognition—despite its flaws—remains superior for:</p>
+                    
+                    <ul>
+                        <li><strong>Understanding context:</strong> knowing why someone is behaving unusually</li>
+                        <li><strong>Recognizing exceptions:</strong> when someone is acting out of character</li>
+                        <li><strong>Grasping motivations:</strong> what someone is trying to achieve</li>
+                        <li><strong>Predicting novel situations:</strong> how someone will respond to new challenges</li>
+                        <li><strong>Cultural interpretation:</strong> what behaviors mean in specific social contexts</li>
+                    </ul>
+                    
+                    <p>AI excels at measurement; humans excel at meaning. Both have their place, but we shouldn't mistake statistical sophistication for genuine psychological insight.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>Why Asking Works Better Than Guessing</h2>
+                <p class="section-teaser">Epley's research on the power of direct communication over mind reading</p>
+            </div>
+            <div class="section-content">
+                <p>When we want to understand what someone else is thinking or feeling, we usually try to put ourselves in their shoes. Psychologists call this "perspective-taking"—imagining how we would think and feel in their situation.</p>
+
+                <p>There's a simpler, more accurate approach: just ask them.</p>
+
+                <p>Research consistently shows that "perspective-getting" (asking directly) beats "perspective-taking" (imagining) across almost every situation where it's been tested.</p>
+
+                <div class="concept-box">
+                    <h3>Why Perspective-Taking Fails</h3>
+                    <p>When we try to imagine what someone else is thinking, we face several unavoidable problems:</p>
+                    
+                    <ul>
+                        <li><strong>We use our own mental framework.</strong> We imagine how we would think in their situation, not how they actually think.</li>
+                        <li><strong>We project our preferences and biases.</strong> What seems important to us feels important to them.</li>
+                        <li><strong>We lack crucial information.</strong> We don't know their full history, context, or current concerns.</li>
+                        <li><strong>We rely on stereotypes.</strong> We fill gaps with assumptions about their group, background, or type.</li>
+                        <li><strong>We confirm our existing beliefs.</strong> We imagine scenarios that support what we already think about them.</li>
+                    </ul>
+                    
+                    <p>These aren't moral failures—they're built-in limitations of trying to simulate another person's mental world from the outside.</p>
+                </div>
+
+                <div class="research-highlight">
+                    <h3>The Empathic Accuracy Studies</h3>
+                    <p>William Ickes and his colleagues studied "empathic accuracy"—how well people can infer what others are thinking and feeling. Their method was simple: they had people watch videos of themselves in conversations, then guess what they and their partner were thinking at specific moments.</p>
+                    
+                    <p>The results were humbling. Even people in close relationships—married couples, best friends, family members—frequently misread each other's thoughts and feelings. Accuracy varied enormously, and there was always substantial room for improvement through direct communication.</p>
+                    
+                    <p>Most surprising: relationship length didn't guarantee accuracy. Married couples who had been together for years still misunderstood each other regularly, especially during conflicts or stressful periods.</p>
+                    <div class="citation">Ickes, W. (1993). Empathic accuracy. Journal of Personality, 61(4), 587-610.</div>
+                </div>
+
+                <div class="key-finding">
+                    <h3>Where Perspective-Getting Wins</h3>
+                    <p>Epley and Eyal's (2019) review found consistent advantages for asking directly rather than guessing across multiple domains:</p>
+                    
+                    <ul>
+                        <li><strong>Negotiation:</strong> People who asked about others' priorities and constraints reached better agreements than those who assumed.</li>
+                        <li><strong>Helping behavior:</strong> Asking what someone actually needs leads to more effective assistance than guessing what would be helpful.</li>
+                        <li><strong>Conflict resolution:</strong> Understanding people's real concerns (vs. assumed motivations) leads to faster resolution.</li>
+                        <li><strong>Relationship satisfaction:</strong> Couples who ask about each other's thoughts and feelings have fewer harmful misunderstandings.</li>
+                        <li><strong>Workplace cooperation:</strong> Teams that explicitly discuss goals and concerns perform better than those that assume everyone is on the same page.</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box">
+                    <h3>Why We Resist Asking</h3>
+                    <p>If asking works better than guessing, why don't we do it more often?</p>
+                    
+                    <ul>
+                        <li><strong>We think we should already know.</strong> Asking feels like admitting ignorance or inattentiveness.</li>
+                        <li><strong>We worry about seeming intrusive.</strong> We don't want to pry or make others uncomfortable.</li>
+                        <li><strong>We fear the answer.</strong> Sometimes we prefer our assumptions to potentially uncomfortable truths.</li>
+                        <li><strong>We trust our intuition too much.</strong> Our guesses feel insightful and accurate, even when they're not.</li>
+                        <li><strong>Cultural norms discourage it.</strong> Many cultures value indirect communication and reading between the lines.</li>
+                    </ul>
+                    
+                    <p>These are understandable concerns, but they often lead us to choose the less accurate, more problematic path of assumption and projection.</p>
+                </div>
+
+                <div class="interactive-demo">
+                    <h3>Practice Perspective-Getting</h3>
+                    <p>Think of a current situation where you're unsure what someone is thinking or feeling—perhaps a tension at work, a misunderstanding with a friend, or confusion about a family member's behavior.</p>
+                    <button class="demo-button" onclick="showPerspectiveGetting()">See Alternative Approaches</button>
+                    <div class="demo-result" id="perspectiveResult">
+                        <p><strong>Instead of perspective-taking:</strong> "I know why they're acting this way..." followed by mental simulation based on limited information and personal assumptions.</p>
+                        
+                        <p><strong>Try perspective-getting:</strong></p>
+                        <ul>
+                            <li>"I'm having trouble understanding what's happening from your perspective. Can you help me see it differently?"</li>
+                            <li>"What would be most helpful for you in this situation?"</li>
+                            <li>"I might be misreading things—what's actually going through your mind?"</li>
+                            <li>"What am I missing about your experience with this?"</li>
+                            <li>"Help me understand what's important to you here."</li>
+                        </ul>
+                        
+                        <p><strong>The key difference:</strong> Ask with genuine curiosity to learn, not to confirm what you already think. The goal is understanding, not validation.</p>
+                    </div>
+                </div>
+
+                <div class="key-finding">
+                    <h3>When Asking Isn't Enough</h3>
+                    <p>Perspective-getting works better than perspective-taking, but it's not perfect. People don't always know their own minds, may not want to share honestly, or might lack the words to express complex feelings.</p>
+                    
+                    <p>Still, asking gives you a starting point based on actual information rather than projection. Even when answers are incomplete or biased, they're usually more accurate than your guesses.</p>
+                    
+                    <p>And the act of asking itself often improves relationships by showing interest, care, and humility about the limits of your understanding.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="synthesis">
+            <h2>What This All Means</h2>
+            
+            <div class="synthesis-grid">
+                <div class="synthesis-item">
+                    <h3>Focus on Situations, Not Just Character</h3>
+                    <p>Ross and Nisbett's most important insight applies everywhere: instead of asking "What's wrong with this person?" ask "What situation created this behavior?" Design environments that encourage good behavior from most people rather than trying to identify the "right" people.</p>
+                    <p>This changes how we should approach management, parenting, public policy, and even understanding ourselves.</p>
+                </div>
+                
+                <div class="synthesis-item">
+                    <h3>Embrace Intellectual Humility</h3>
+                    <p>The research consistently shows we're poorly calibrated—our confidence in social judgments far exceeds our accuracy. Recognizing the limits of our social radar may be more valuable than trying to improve it through training (which rarely works).</p>
+                    <p>Intellectual humility means being genuinely curious about others rather than certain about them.</p>
+                </div>
+                
+                <div class="synthesis-item">
+                    <h3>Use Structure for Important Decisions</h3>
+                    <p>When the stakes are high—hiring, legal judgments, medical diagnoses, major relationship decisions—don't rely on gut feelings alone. Use structured approaches: predetermined criteria, multiple perspectives, systematic information gathering, and objective measures.</p>
+                    <p>Your intuition is great for generating hypotheses; it's terrible for making final judgments.</p>
+                </div>
+                
+                <div class="synthesis-item">
+                    <h3>Communicate More Explicitly</h3>
+                    <p>Digital communication strips away most social cues while leaving our confidence intact. Compensate deliberately: be explicit about tone, overcommunicate positive intentions, and move complex or emotionally charged conversations to richer media when possible.</p>
+                    <p>When in doubt, assume benign intent rather than hostility.</p>
+                </div>
+                
+                <div class="synthesis-item">
+                    <h3>Ask Instead of Assuming</h3>
+                    <p>The most reliable way to understand what someone is thinking or feeling is to ask them directly. This requires overcoming cultural norms against appearing ignorant and personal fears of uncomfortable answers.</p>
+                    <p>Perspective-getting beats perspective-taking almost every time it's been tested.</p>
+                </div>
+                
+                <div class="synthesis-item">
+                    <h3>Understand AI's Limitations</h3>
+                    <p>AI systems can detect impressive statistical patterns in human behavior, but pattern recognition isn't the same as psychological understanding. They excel at measurement but struggle with meaning, context, and the interpretation that human social cognition—despite its flaws—still provides.</p>
+                    <p>Use AI for what it's good at; don't mistake correlation for comprehension.</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.2);">
+                <p style="font-size: 1.1rem; opacity: 0.9; max-width: 600px; margin: 0 auto;">
+                    We began with the confident hiring manager who misread a Zoom interview, attributing technical glitches to character flaws. That story captures the broader pattern: our social judgments feel insightful and certain, but they're often wrong in predictable ways.
+                </p>
+                <p style="font-size: 1.1rem; opacity: 0.9; max-width: 600px; margin: 1rem auto 0;">
+                    Perfect mind reading is impossible, but understanding these systematic failures opens space for more effective social interaction through humility, better systems, and direct communication. Other minds may be more opaque than we'd like, but accepting that might be the first step toward actually understanding each other.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Progress tracking and scroll animations
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+
+            // Animate sections into view
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                const isVisible = rect.top < window.innerHeight * 0.8;
+                
+                if (isVisible) {
+                    section.classList.add('visible');
+                }
+            });
+        });
+
+        // Section toggle functionality
+        function toggleSection(header) {
+            const section = header.parentElement;
+            const content = section.querySelector('.section-content');
+            const isActive = content.classList.contains('active');
+            
+            // Close all other sections
+            document.querySelectorAll('.section-content.active').forEach(other => {
+                if (other !== content) {
+                    other.classList.remove('active');
+                }
+            });
+            
+            // Toggle current section
+            if (isActive) {
+                content.classList.remove('active');
+            } else {
+                content.classList.add('active');
+                // Smooth scroll to section
+                setTimeout(() => {
+                    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            }
+        }
+
+        // Interactive demonstration functions
+        function showAttributionAnalysis() {
+            const result = document.getElementById('attributionResult');
+            result.style.display = result.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function showThinSliceAnalysis() {
+            const result = document.getElementById('thinSliceResult');
+            result.style.display = result.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function showPerspectiveGetting() {
+            const result = document.getElementById('perspectiveResult');
+            result.style.display = result.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            window.dispatchEvent(new Event('scroll'));
+        });
+    </script>
+</body>
+</html>
